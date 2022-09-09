@@ -1,7 +1,7 @@
 from time import sleep
 
 while True:
-    print("Hello world!")
+    print("waffle")
     sleep(1)
     if True:
-        print("waffle")
+        input("and bolts")
