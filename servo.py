@@ -1,5 +1,4 @@
 import board
-import neopixel
 from time import sleep
 import pwmio
 import servo
