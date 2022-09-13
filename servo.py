@@ -2,7 +2,7 @@ import board
 from time import sleep
 import pwmio
 import servo
-from digitalio import DigitalInOut, Direction, Pull
+from digitalio import DigitalInOut, Direction
 angle = 90
 
 
