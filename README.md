@@ -1,5 +1,6 @@
 # CPyProjectTemplate
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. Needs digitalio, time, servo, and pwmio libraries to work.
+Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
 ## Use
 ### Every new project:
 1. Make a GitHub account if you don't have one with your normal school credentials and sign into it.
