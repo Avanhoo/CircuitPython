@@ -20,17 +20,17 @@ while True:
         print (str(d) +" -   " + str(r) +", " + str(g) +", "+ str(b))
     except RuntimeError:
         print("Retrying!")
-    time.sleep(0.1)
+    time.sleep(0.05)
     
     
-    r = simpleio.map_range(d,5, 20, 255, 0)
+    r = simpleio.map_range(d,5, 17.5, 255, 0)
    
     b = simpleio.map_range(d,15, 20, 0, 255)
     if d >20 and d<25:
         b = simpleio.map_range(d,20, 25, 255, 0)
     if d<15 or d>25:
         b = 0
-    g = simpleio.map_range(d,20, 35, 0, 255)
+    g = simpleio.map_range(d,22.5, 35, 0, 255)
    
     if d<5:
         r=255
