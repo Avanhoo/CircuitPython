@@ -14,8 +14,12 @@ change = 1
 # some LCDs are 0x3f... some are 0x27.
 lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 
-lcd.print("Hello, Engineer!")
 print(touch.threshold)
+while not touch.value and not touch2.value:
+    lcd.print("Beans on Toast                  ")
+    sleep(.75)
+    lcd.print("Beans on Toast       (And Bolts)")
+    sleep(.75)
 while True:
     if touch.value:
         count += change
