@@ -27,7 +27,7 @@ while True:
         print(count)
         lcd.print(str(count))
         while touch.value:
-            sleep(.1)
+            sleep(.05)
 
     if touch2.value:
         change = change*-1
