@@ -6,6 +6,7 @@ Libraries required:
 - [simpleio](https://docs.circuitpython.org/projects/simpleio/en/latest/api.html)
 - pwmio
 - time
+
 Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
 lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchio and a custom lcd library for circuitpython.
 ## Use
