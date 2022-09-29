@@ -1,3 +1,4 @@
+#Afton Van Hooser, neopixel color control based on distance sensor
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
 

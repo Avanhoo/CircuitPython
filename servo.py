@@ -1,3 +1,5 @@
+#Afton Van Hooser, servo control with buttons
+
 import board
 from time import sleep
 import pwmio

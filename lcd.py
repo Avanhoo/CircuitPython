@@ -1,3 +1,6 @@
+# Afton Van Hooser
+# touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
+
 import board
 import touchio
 from lcd.lcd import LCD
