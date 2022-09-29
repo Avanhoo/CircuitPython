@@ -12,6 +12,11 @@ Libraries required:
 - pwmio
 - time
 (you can assume the time library will be in almost every project)
+
+## Proof
+
+https://user-images.githubusercontent.com/113116247/193049908-d9944d85-4a80-4181-9e3c-01f6b3ac5f33.mp4
+
 ## Code
 ```
 #Afton Van Hooser, servo control with buttons
@@ -53,6 +58,10 @@ Libraries required:
 - adafruit_hcsr04
 - neopixel
 - simpleio
+
+## Proof
+
+https://user-images.githubusercontent.com/113116247/193050026-4c207ad1-e406-4266-b3e2-7cf399ccbf5c.mp4
 
 ## Code
 ```
