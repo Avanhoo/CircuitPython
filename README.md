@@ -61,7 +61,7 @@ Libraries required:
 
 ## Proof
 
-https://user-images.githubusercontent.com/113116247/193050026-4c207ad1-e406-4266-b3e2-7cf399ccbf5c.mp4
+![Distance_proof](https://user-images.githubusercontent.com/113116247/193050734-0cc4c493-cea9-422a-865a-26fbb7094b95.gif)
 
 ## Code
 ```
