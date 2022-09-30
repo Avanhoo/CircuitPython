@@ -13,44 +13,47 @@ Libraries required:
 - time
 (you can assume the time library will be in almost every project)
 
-## Proof
+## Video
 
-https://user-images.githubusercontent.com/113116247/193049908-d9944d85-4a80-4181-9e3c-01f6b3ac5f33.mp4
+![Servo Video](https://user-images.githubusercontent.com/113116247/193277068-8d9a1f83-d436-4896-8e4d-b3a8a932f824.gif)
 
 ## Code
-```
-#Afton Van Hooser, servo control with buttons
+<Click to View>
+    ```
+    #Afton Van Hooser, servo control with buttons
 
-import board
-from time import sleep
-import pwmio
-import servo
-from digitalio import DigitalInOut, Direction
-angle = 90
-
-
-pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
-
-# Create a servo object, my_servo.
-my_servo = servo.Servo(pwm)
-
-button = DigitalInOut(board.D7) # Code from https://learn.adafruit.com/circuitpython-essentials/circuitpython-digital-in-out
-button.direction = Direction.INPUT
-button2 = DigitalInOut(board.D6)
-button2.direction = Direction.INPUT
+    import board
+    from time import sleep
+    import pwmio
+    import servo
+    from digitalio import DigitalInOut, Direction
+    angle = 90
 
 
-while True:
-    if button.value and angle < 180:
-        angle += 1
+    pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 
-    if button2.value and angle > 0:
-        angle -=1
-    
-    print(angle)
-    my_servo.angle = angle
-    sleep(0.01)
-```
+    # Create a servo object, my_servo.
+    my_servo = servo.Servo(pwm)
+
+    button = DigitalInOut(board.D7) # Code from https://learn.adafruit.com/circuitpython-essentials/circuitpython-digital-in-out
+    button.direction = Direction.INPUT
+    button2 = DigitalInOut(board.D6)
+    button2.direction = Direction.INPUT
+
+
+    while True:
+        if button.value and angle < 180:
+            angle += 1
+
+        if button2.value and angle > 0:
+            angle -=1
+
+        print(angle)
+        my_servo.angle = angle
+        sleep(0.01)
+    ```
+
+</Click to View>
 
 # Ultrasonic_Adventures
 Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
@@ -59,13 +62,13 @@ Libraries required:
 - neopixel
 - simpleio
 
-## Proof
+## Video
 
-![Distance_proof](https://user-images.githubusercontent.com/113116247/193050734-0cc4c493-cea9-422a-865a-26fbb7094b95.gif)
+![Distance_Video](https://user-images.githubusercontent.com/113116247/193050734-0cc4c493-cea9-422a-865a-26fbb7094b95.gif)
 
 ## Code
 ```
-#Afton Van Hooser, neopixel color control based on distance sensor
+# Afton Van Hooser, neopixel color control based on distance sensor
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
 
