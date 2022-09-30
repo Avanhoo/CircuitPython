@@ -71,6 +71,9 @@ Libraries required:
 
 ![Distance_Video](https://user-images.githubusercontent.com/113116247/193050734-0cc4c493-cea9-422a-865a-26fbb7094b95.gif)
 
+&nbsp
+    
+    
 ## Code
 ```
 # Afton Van Hooser, neopixel color control based on distance sensor
