@@ -21,7 +21,7 @@ Libraries required:
 <details>
 <summary><b>Click to Show<b><summary>
     
-    <p>
+<p>
     ```
     
     #Afton Van Hooser, servo control with buttons
@@ -56,7 +56,7 @@ Libraries required:
         my_servo.angle = angle
         sleep(0.01)
     ```
-        </p>
+    </p>
 
 </details>
 
