@@ -19,7 +19,7 @@ Libraries required:
 
 ## Code
 <details>
-<summary><b>Click to Show<b><summary>
+<summary><b>Click to Show<b></summary>
     
 <p>
     ```
