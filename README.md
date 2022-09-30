@@ -77,6 +77,7 @@ Libraries required:
     
 <p>
     ```
+    
     # Afton Van Hooser, neopixel color control based on distance sensor
     # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
     # SPDX-License-Identifier: MIT
@@ -132,6 +133,7 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
     
 <p>
     ```
+    
     # Afton Van Hooser
     # touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
 
