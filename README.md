@@ -127,6 +127,10 @@ Libraries required:
 # LCD_Shenanigans
 Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchio and a few custom lcd libraries for circuitpython.
 
+## Video
+    
+![LCD Video](https://user-images.githubusercontent.com/113116247/193283964-bb62dbda-2795-4635-a4b6-926c1c3d4781.gif)
+
 ## Code
 <details>
 <summary><b>Click to Show<b></summary>
