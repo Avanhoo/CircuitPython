@@ -18,7 +18,10 @@ Libraries required:
 ![Servo Video](https://user-images.githubusercontent.com/113116247/193277068-8d9a1f83-d436-4896-8e4d-b3a8a932f824.gif)
 
 ## Code
-<Click to View>
+<details>
+<summary><b>Click to Show<b><summary>
+    
+<p>
     ```
     #Afton Van Hooser, servo control with buttons
 
@@ -52,8 +55,9 @@ Libraries required:
         my_servo.angle = angle
         sleep(0.01)
     ```
+</p>
 
-</Click to View>
+</details>
 
 # Ultrasonic_Adventures
 Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
