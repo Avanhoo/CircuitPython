@@ -70,108 +70,118 @@ Libraries required:
 ## Video
 
 ![Distance_Video](https://user-images.githubusercontent.com/113116247/193050734-0cc4c493-cea9-422a-865a-26fbb7094b95.gif)
-
-&nbsp;
-    
     
 ## Code
-```
-# Afton Van Hooser, neopixel color control based on distance sensor
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
-import time
-import board
-import adafruit_hcsr04
-import neopixel
-import simpleio
-
-dot = neopixel.NeoPixel(board.NEOPIXEL, 1)
-dot.brightness = .25
-sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.D5, echo_pin=board.D6)
-d = 30
-r = 0
-g = 0
-b = 0
-while True:
-    try:
-        d = (sonar.distance)
-        print (str(d) +" -   " + str(r) +", " + str(g) +", "+ str(b))
-    except RuntimeError:
-        print("Retrying!")
-    time.sleep(0.05)
+<details>
+<summary><b>Click to Show<b></summary>
     
-    
-    r = simpleio.map_range(d,5, 17.5, 255, 0)
-   
-    b = simpleio.map_range(d,15, 20, 0, 255)
-    if d >20 and d<25:
-        b = simpleio.map_range(d,20, 25, 255, 0)
-    if d<15 or d>25:
-        b = 0
-    g = simpleio.map_range(d,22.5, 35, 0, 255)
-   
-    if d<5:
-        r=255
-    if d>35:
-        g=255
-    dot.fill((r,g,b))
+<p>
+    ```
+    # Afton Van Hooser, neopixel color control based on distance sensor
+    # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+    # SPDX-License-Identifier: MIT
 
-```
+    import time
+    import board
+    import adafruit_hcsr04
+    import neopixel
+    import simpleio
+
+    dot = neopixel.NeoPixel(board.NEOPIXEL, 1)
+    dot.brightness = .25
+    sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.D5, echo_pin=board.D6)
+    d = 30
+    r = 0
+    g = 0
+    b = 0
+    while True:
+        try:
+            d = (sonar.distance)
+            print (str(d) +" -   " + str(r) +", " + str(g) +", "+ str(b))
+        except RuntimeError:
+            print("Retrying!")
+        time.sleep(0.05)
+
+
+        r = simpleio.map_range(d,5, 17.5, 255, 0)
+
+        b = simpleio.map_range(d,15, 20, 0, 255)
+        if d >20 and d<25:
+            b = simpleio.map_range(d,20, 25, 255, 0)
+        if d<15 or d>25:
+            b = 0
+        g = simpleio.map_range(d,22.5, 35, 0, 255)
+
+        if d<5:
+            r=255
+        if d>35:
+            g=255
+        dot.fill((r,g,b))
+
+    ```
+</p>
+    
+</details>
 
 # LCD_Shenanigans
 Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchio and a few custom lcd libraries for circuitpython.
 
 ## Code
-```
-# Afton Van Hooser
-# touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+    ```
+    # Afton Van Hooser
+    # touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
 
-import board
-import touchio
-from lcd.lcd import LCD
-from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
-from time import sleep
+    import board
+    import touchio
+    from lcd.lcd import LCD
+    from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+    from time import sleep
 
-# get and i2c object
-i2c = board.I2C()
-touch = touchio.TouchIn(board.A4)
-touch2 = touchio.TouchIn(board.A5)
-count = 0
-change = 1
+    # get and i2c object
+    i2c = board.I2C()
+    touch = touchio.TouchIn(board.A4)
+    touch2 = touchio.TouchIn(board.A5)
+    count = 0
+    change = 1
 
-# some LCDs are 0x3f... some are 0x27.
-lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+    # some LCDs are 0x3f... some are 0x27.
+    lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 
-print(touch.threshold)
-while not touch.value and not touch2.value:
-    lcd.print("Beans on Toast                  ")
-    sleep(.75)
-    lcd.print("Beans on Toast       (And Bolts)")
-    sleep(.75)
-while True:
-    if touch.value:
-        count += change
-        lcd.clear()
-        if change == 1:
-            lcd.print("Counting Up     ")
-        else:
-            lcd.print("Counting Down   ")
-        print(count)
-        lcd.print(str(count))
-        while touch.value:
-            sleep(.05)
+    print(touch.threshold)
+    while not touch.value and not touch2.value:
+        lcd.print("Beans on Toast                  ")
+        sleep(.75)
+        lcd.print("Beans on Toast       (And Bolts)")
+        sleep(.75)
+    while True:
+        if touch.value:
+            count += change
+            lcd.clear()
+            if change == 1:
+                lcd.print("Counting Up     ")
+            else:
+                lcd.print("Counting Down   ")
+            print(count)
+            lcd.print(str(count))
+            while touch.value:
+                sleep(.05)
 
-    if touch2.value:
-        change = change*-1
-        lcd.clear()
-        if change == 1:
-            lcd.print("Counting Up     ")
-        else:
-            lcd.print("Counting Down   ")
-        lcd.print(str(count))
-        print("switch!")
-        while touch2.value:
-            sleep(.1)
+        if touch2.value:
+            change = change*-1
+            lcd.clear()
+            if change == 1:
+                lcd.print("Counting Up     ")
+            else:
+                lcd.print("Counting Down   ")
+            lcd.print(str(count))
+            print("switch!")
+            while touch2.value:
+                sleep(.1)
 
-```
+    ```
+</p>
+</details>
