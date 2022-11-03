@@ -191,3 +191,13 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
     ```
 </p>
 </details>
+ 
+    
+# Motor Control
+Control the power of a motor with a potentiometer.
+    
+## Video
+    
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/113116247/199739633-85a8cb55-a799-4342-ab2b-6019c33eb7c9.gif)
+
+## Code
