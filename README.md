@@ -57,7 +57,7 @@ Libraries required:
         my_servo.angle = angle
         sleep(0.01)
     
-    ```
+```
 </p>
 
 </details>
