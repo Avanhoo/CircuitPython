@@ -2,6 +2,7 @@
 - [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Servo_Work)
 - [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Ultrasonic_Adventures)
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#LCD_Shenanigans)
+- [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Motor_Control)
 
 # Servo_Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
@@ -190,6 +191,7 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
 
     ```
 </p>
+    
 </details>
  
     
@@ -200,8 +202,7 @@ Control the power of a motor with a potentiometer.
     
 ![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/113116247/199739633-85a8cb55-a799-4342-ab2b-6019c33eb7c9.gif)
 
-## Code
-    
+## Code 
 <details>
 <summary><b>Click to Show<b></summary>
     
@@ -223,18 +224,17 @@ while True:
     print(int(v) / 65535) # Prints the potentiometer value from 0-1.
     time.sleep(.1)
     motor.duty_cycle = (int(v)) # Pushes the drive value to the motor
-    
     ```
 </p>
     
 </details>
     
+    
 # Next Assignment
     
 ## Video
 
-## Code
-    
+## Code   
 <details>
 <summary><b>Click to Show<b></summary>
     
@@ -244,7 +244,7 @@ while True:
     
     
     ```
-</p>
+</p>  
     
 </details>
     
