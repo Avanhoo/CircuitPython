@@ -2,7 +2,7 @@
 - [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Servo_Work)
 - [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Ultrasonic_Adventures)
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#LCD_Shenanigans)
-- [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Motor_Control)
+- [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
 
 # Servo_Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
@@ -23,8 +23,7 @@ Libraries required:
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+```  
     # Afton Van Hooser, servo control with buttons
 
     import board
@@ -77,8 +76,7 @@ Libraries required:
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+```
     # Afton Van Hooser, neopixel color control based on distance sensor
     # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
     # SPDX-License-Identifier: MIT
@@ -137,8 +135,7 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+```  
     # Afton Van Hooser
     # touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
 
@@ -188,7 +185,6 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
             print("switch!")
             while touch2.value:
                 sleep(.1)
-
     ```
 </p>
     
@@ -207,8 +203,7 @@ Control the power of a motor with a potentiometer.
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+```   
 import time
 import board
 from analogio import AnalogIn
@@ -239,7 +234,7 @@ while True:
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
+```
     
     
     
