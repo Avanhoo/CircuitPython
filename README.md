@@ -56,8 +56,9 @@ Libraries required:
         print(angle)
         my_servo.angle = angle
         sleep(0.01)
+       
+    ```
     
-```
 </p>
 
 </details>
