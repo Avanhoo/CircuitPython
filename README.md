@@ -1,9 +1,10 @@
 # Cable of Tontents
-- [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Servo_Work)
-- [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#Ultrasonic_Adventures)
-- [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#LCD_Shenanigans)
+- [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#servo-work)
+- [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#ultrasonic-adventures)
+- [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#lcd-shenanigans)
+- [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
 
-# Servo_Work
+# Servo Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
 Libraries required:
 - [digitalio](https://docs.circuitpython.org/en/latest/shared-bindings/digitalio/index.html) 
@@ -22,7 +23,8 @@ Libraries required:
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
+
+```
     
     # Afton Van Hooser, servo control with buttons
 
@@ -54,13 +56,16 @@ Libraries required:
 
         print(angle)
         my_servo.angle = angle
-        sleep(0.01)
-    ```
+        sleep(0.01)               
+```  
 </p>
 
 </details>
 
-# Ultrasonic_Adventures
+## Reflection
+I don't really know how any of the pwm outputs work, but this project has reminded me that circuitpython is inferior in every way to Arduino. Still, I now know how to do inputs & outputs. 
+
+# Ultrasonic Adventures
 Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
 Libraries required:
 - adafruit_hcsr04
@@ -76,8 +81,9 @@ Libraries required:
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+
+```
+
     # Afton Van Hooser, neopixel color control based on distance sensor
     # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
     # SPDX-License-Identifier: MIT
@@ -117,14 +123,16 @@ Libraries required:
             r=255
         if d>35:
             g=255
-        dot.fill((r,g,b))
-
-    ```
+        dot.fill((r,g,b))\
+```
 </p>
     
 </details>
 
-# LCD_Shenanigans
+## Reflection
+It took me a long time to get the color gradients right because I kept confusing myself with the numbers. Thankfully the benevolent ultrasonic sensor decided to work with the library, so that part was painless. 
+
+# LCD Shenanigans
 Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchio and a few custom lcd libraries for circuitpython.
 
 ## Video
@@ -136,8 +144,9 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
 <summary><b>Click to Show<b></summary>
     
 <p>
-    ```
-    
+
+```  
+
     # Afton Van Hooser
     # touchio credit: https://learn.adafruit.com/circuitpython-essentials/circuitpython-cap-touch
 
@@ -186,8 +195,71 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
             lcd.print(str(count))
             print("switch!")
             while touch2.value:
-                sleep(.1)
-
-    ```
+                sleep(.1)              
+```
 </p>
+    
 </details>
+ 
+## Reflection
+I decided to go with capacitive touch instead of buttons for this one, which required the use of a 1 million Ω resistor. Don't know why, but the capacitive touch things are super duper sensitive, and if this resistor was unplugged at any point the whole thing crashed. As far as the lcd control went, it wasn't bad, but there were some pretty hilarious outputs when I forgot to clear the screen and it looped back onto itself.
+
+# Motor Control
+Control the power of a motor with a potentiometer.
+    
+## Video
+    
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/113116247/199739633-85a8cb55-a799-4342-ab2b-6019c33eb7c9.gif)
+
+## Code 
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+
+```   
+
+import time
+import board
+from analogio import AnalogIn
+import pwmio
+import simpleio
+
+pot = AnalogIn(board.A2) # Sets up an input for the potentiometer
+motor = pwmio.PWMOut(board.D7, duty_cycle=0, frequency=440, variable_frequency=True) # Sets up a PWM output for the motor
+v = 0
+
+while True:
+    v = simpleio.map_range(pot.value, 2150, 65520, 0, 65535) # Maps the potentiometer ranges to those of the motor. The potentiometer never really reaches 0, so the min is set to 2150.
+    print(int(v) / 65535) # Prints the potentiometer value from 0-1.
+    time.sleep(.1)
+    motor.duty_cycle = (int(v)) # Pushes the drive value to the motor    
+```
+</p>
+    
+</details>
+    
+## Reflection
+It took me a long time to find PWM code that made enough sense to work. I still don't really get it, but the rest was easy.
+
+# Next Assignment
+    
+## Video
+
+## Code   
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+```
+    
+    
+    
+    ```
+</p>  
+    
+</details>
+    
+## Reflection
+
+
