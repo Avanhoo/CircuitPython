@@ -3,7 +3,8 @@ from time import sleep
 import random
 import pwmio
 import servo
-import math
+from analogio import AnalogIn
+
 
 turn = 0 # whose turn it is, 0 is player, 1 is AI
 round = 1 # which round of the game it is
@@ -16,20 +17,23 @@ armProg = 96
 
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 pwm2 = pwmio.PWMOut(board.A5, duty_cycle=2 ** 15, frequency=50)
-#pwm3 = pwmio.PWMOut(board.A4, duty_cycle=2 ** 15, frequency=50)
+pwm3 = pwmio.PWMOut(board.A4, duty_cycle=2 ** 15, frequency=50)
+color = AnalogIn(board.A2)
+
+
 theBoard = {'7': ' ' , '8': ' ' , '9': ' ' ,
             '4': ' ' , '5': ' ' , '6': ' ' ,
             '1': ' ' , '2': ' ' , '3': ' ' }
 
 distBoard = {'7': 170 , '8': 157 , '9': 170 ,
             '4': 110 , '5': 96 , '6': 110 ,
-            '1': 58 , '2': 30 , '3': 61 }
+            '1': 58 , '2': 30 , '3': 61 , '0': 112}
 angleBoard = {'7': 110 , '8': 90 , '9': 70 ,
             '4':  121, '5': 90 , '6': 63 ,
-            '1': 142 , '2': 90 , '3': 43 }
+            '1': 142 , '2': 90 , '3': 43 , '0': 165}
 arm = servo.Servo(pwm)
 spinny = servo.Servo(pwm2)
-#angleServo = servo.Servo(pwm2)
+uppyServo = servo.Servo(pwm3)
 #                                                  ARM SERVO SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
 
 def printBoard(board):
@@ -73,15 +77,37 @@ def checkWin():
             elif theBoard['1'] == theBoard['5'] == theBoard['9'] and theBoard['9'] != ' ': # diagonal
                 end += 1
                 print("Diagonal 9-1")
-                 
+
+def grab(direction):
+    if direction == 0:
+        uppyServo.throttle = -1
+    else:
+        uppyServo.throttle = 1
+    sleep(.5)
+    uppyServo.throttle = 0
 
 def place(spot):
     armProg = arm.angle
-    sleep(1)
-    theBoard[str(spot)] = "O"
-    spinny.angle = (angleBoard[str(spot)] + offset)
     sleep(.25)
-    while arm.angle != distBoard[str(spot)]:
+    while arm.angle != distBoard['0']: # code to move arm smoothly
+        if abs(armProg - distBoard['0']) < 2:
+            arm.angle = (distBoard['0'] * 0.86925636203 + 5)
+            break
+        elif armProg < distBoard['0']:
+            armProg += 1
+        elif armProg > distBoard['0']:
+            armProg -= 1
+        arm.angle = (armProg * 0.86925636203 + 5) 
+        sleep(.0001)
+    spinny.angle = (angleBoard['0'] + offset)
+    sleep(1)
+    #   PICKUP
+
+    armProg = arm.angle
+    theBoard[str(spot)] = "O"
+    spinny.angle = (angleBoard[str(spot)] + offset)#     Turn
+    sleep(.25)
+    while arm.angle != distBoard[str(spot)]:#             Extend
         if abs(armProg - distBoard[str(spot)]) < 2:
             arm.angle = (distBoard[str(spot)] * 0.86925636203 + 5)
             break
@@ -90,7 +116,9 @@ def place(spot):
         elif armProg > distBoard[str(spot)]:
             armProg -= 1
         arm.angle = (armProg * 0.86925636203 + 5) 
-        sleep(.001)
+        sleep(.0001)
+
+    #   DROP
 
     print(arm.angle)
     #angleServo.angle(angleBoard[str(spot)])
@@ -106,6 +134,7 @@ for i in range(5):
     print("Round " + str(round) + ", Your Turn")
     turn = 0
     printBoard(theBoard)
+    print("--------------------------------")
     print("Where Would you like to move?")
     move = input("")
 
@@ -328,7 +357,10 @@ for i in range(5):
 
         else:
             if round == 2 and theBoard['5'] == ' ':
-                place(5)
+                if random.randint(1,2) == 1:
+                    place(5)
+                else:
+                    place(random.randint(1,9))
                 round += 1
             else:
                 while plan != 10:
