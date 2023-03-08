@@ -28,10 +28,10 @@ theBoard = {'7': ' ' , '8': ' ' , '9': ' ' , # The visual board, keeps track of 
 
 distBoard = {'7': 170 , '8': 157 , '9': 170 , # Holds all of the distance data to the board
             '4': 110 , '5': 96 , '6': 110 ,
-            '1': 58 , '2': 30 , '3': 61 , '0': 112}
+            '1': 58 , '2': 30 , '3': 58 , '0': 112}
 angleBoard = {'7': 110 , '8': 90 , '9': 70 , # Holds all of the angle data to the board
-            '4':  121, '5': 90 , '6': 63 ,
-            '1': 142 , '2': 90 , '3': 43 , '0': 165}
+            '4':  122, '5': 90 , '6': 61 ,
+            '1': 150 , '2': 90 , '3': 42 , '0': 170}
 arm = servo.Servo(pwm) # The extendy arm servo
 spinny = servo.Servo(pwm2) # The twisty servo
 #                                                  ARM SERVO SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
