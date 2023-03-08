@@ -79,11 +79,18 @@ def checkWin():
                 print("Diagonal 9-1")
 
 def grab(direction): # Code to pick up and drop the magnet
-    if direction == 0:
-        uppy.duty_cycle = (3535) # This motor goes from 0 to 65535
-    elif direction == 1:
-        uppy.duty_cycle = (6200)
-    sleep(1.5)
+    if direction == 0: # 0 Picks Up
+        uppy.duty_cycle = (3800) # This motor goes from 0 to 65535, but <4800 is clockwise, >4800 is counter clockwise
+        sleep(1)
+        uppy.duty_cycle = (0)
+        sleep(.25)
+        uppy.duty_cycle = (5800)
+        sleep(1)
+    elif direction == 1: # 1 Drops
+        uppy.duty_cycle = (5800)
+        sleep(.35)
+        uppy.duty_cycle = (3800)
+        sleep(.35)
     uppy.duty_cycle = (0)
 
 def place(spot): # Code to move the arm to a specified place on the board
@@ -114,8 +121,6 @@ def place(spot): # Code to move the arm to a specified place on the board
     sleep(1.25)
     #   PICKUP
     grab(0)
-    sleep(.25)
-    grab(1)
     print("Pickup")
 
     
@@ -147,8 +152,6 @@ def place(spot): # Code to move the arm to a specified place on the board
         sleep(.0001)
 
     #   DROP
-    grab(0)
-    sleep(.25)
     grab(1)
     print("Drop")
 
@@ -160,10 +163,7 @@ spinny.angle = 90 + offset
 print("Move with the numpad.")
 sleep(1)
 
-#uppy.duty_cycle = (6200)
-#uppy.duty_cycle = ()
-#sleep(.125)
-#uppy.duty_cycle = (0)
+uppy.duty_cycle = (0)
 
 
 for i in range(5): # The main tic tac toe loop
@@ -176,11 +176,24 @@ for i in range(5): # The main tic tac toe loop
     move = input("")
 
     try:
-        if int(move) < 10 and  int(move) > 0 and theBoard[move] == " ":
+        if move == "]":
+            uppy.duty_cycle = (5800)
+            sleep(.125)
+            uppy.duty_cycle = (0)
+            i-=1
+            continue
+        elif move == "[":
+            uppy.duty_cycle = (3800)
+            sleep(.125)
+            uppy.duty_cycle = (0)
+            i -=1
+            continue
+        elif int(move) < 10 and  int(move) > 0 and theBoard[move] == " ":
             theBoard[str(move)] = "X"
             round += 1
         else:
             print("Invalid move, try again")
+            i -= 1
             continue
     except:
         print("Invalid move, try again")
