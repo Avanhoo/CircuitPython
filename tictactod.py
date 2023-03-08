@@ -17,7 +17,8 @@ armProg = 96
 
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 pwm2 = pwmio.PWMOut(board.A5, duty_cycle=2 ** 15, frequency=50)
-uppy = pwmio.PWMOut(board.D7, duty_cycle=0, frequency=440, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A timers
+uppy = pwmio.PWMOut(board.D7, duty_cycle=0, frequency=50, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A timers
+#uppy = pwmio.PWMOut(board.A0, duty_cycle=2 ** 15, frequency=50, variable_frequency=True)
 color = AnalogIn(board.A2)
 
 
@@ -79,10 +80,10 @@ def checkWin():
 
 def grab(direction):
     if direction == 0:
-        uppy.duty_cycle = (1000) # This motor goes from 0 to 65535
+        uppy.duty_cycle = (3535) # This motor goes from 0 to 65535
     elif direction == 1:
-        uppy.duty_cycle = (1000)
-    sleep(.5)
+        uppy.duty_cycle = (6200)
+    sleep(1.5)
     uppy.duty_cycle = (0)
 
 def place(spot):
@@ -158,6 +159,11 @@ arm.angle = distBoard['5']
 spinny.angle = 90 + offset
 print("Move with the numpad.")
 sleep(1)
+
+#uppy.duty_cycle = (6200)
+#uppy.duty_cycle = ()
+#sleep(.125)
+#uppy.duty_cycle = (0)
 
 
 for i in range(5):
