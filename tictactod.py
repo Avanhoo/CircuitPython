@@ -22,18 +22,18 @@ uppy = pwmio.PWMOut(board.D7, duty_cycle=0, frequency=50, variable_frequency=Tru
 color = AnalogIn(board.A2)
 
 
-theBoard = {'7': ' ' , '8': ' ' , '9': ' ' ,
+theBoard = {'7': ' ' , '8': ' ' , '9': ' ' , # The visual board, keeps track of placed X's and O's
             '4': ' ' , '5': ' ' , '6': ' ' ,
             '1': ' ' , '2': ' ' , '3': ' ' }
 
-distBoard = {'7': 170 , '8': 157 , '9': 170 ,
+distBoard = {'7': 170 , '8': 157 , '9': 170 , # Holds all of the distance data to the board
             '4': 110 , '5': 96 , '6': 110 ,
             '1': 58 , '2': 30 , '3': 61 , '0': 112}
-angleBoard = {'7': 110 , '8': 90 , '9': 70 ,
+angleBoard = {'7': 110 , '8': 90 , '9': 70 , # Holds all of the angle data to the board
             '4':  121, '5': 90 , '6': 63 ,
             '1': 142 , '2': 90 , '3': 43 , '0': 165}
-arm = servo.Servo(pwm)
-spinny = servo.Servo(pwm2)
+arm = servo.Servo(pwm) # The extendy arm servo
+spinny = servo.Servo(pwm2) # The twisty servo
 #                                                  ARM SERVO SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
 
 def printBoard(board):
@@ -78,7 +78,7 @@ def checkWin():
                 end += 1
                 print("Diagonal 9-1")
 
-def grab(direction):
+def grab(direction): # Code to pick up and drop the magnet
     if direction == 0:
         uppy.duty_cycle = (3535) # This motor goes from 0 to 65535
     elif direction == 1:
@@ -86,7 +86,7 @@ def grab(direction):
     sleep(1.5)
     uppy.duty_cycle = (0)
 
-def place(spot):
+def place(spot): # Code to move the arm to a specified place on the board
     armProg = arm.angle
     sleep(.25)
     while arm.angle != distBoard['0']: # code to move arm smoothly
@@ -166,7 +166,7 @@ sleep(1)
 #uppy.duty_cycle = (0)
 
 
-for i in range(5):
+for i in range(5): # The main tic tac toe loop
     plan = 0
     print("Round " + str(round) + ", Your Turn")
     turn = 0
