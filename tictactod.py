@@ -14,6 +14,8 @@ extend = 0 # how far out the arm is
 twist = 0 # angle of turn of the arm
 offset = 3
 armProg = 96
+colorBase = 0
+scanN = 1
 
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 pwm2 = pwmio.PWMOut(board.A5, duty_cycle=2 ** 15, frequency=50)
@@ -98,13 +100,13 @@ def place(spot): # Code to move the arm to a specified place on the board
     sleep(.25)
     while arm.angle != distBoard['0']: # code to move arm smoothly
         if abs(armProg - distBoard['0']) < 2:
-            arm.angle = (distBoard['0'] * 0.86925636203 + 5)
+            arm.angle = (distBoard['0'])
             break
         elif armProg < distBoard['0']:
             armProg += 1
         elif armProg > distBoard['0']:
             armProg -= 1
-        arm.angle = (armProg * 0.86925636203 + 5) 
+        arm.angle = (armProg) 
         sleep(.0001)
     armProg = spinny.angle
     spinny.angle = (angleBoard['0'] + offset)
@@ -155,11 +157,66 @@ def place(spot): # Code to move the arm to a specified place on the board
     grab(1)
     print("Drop")
 
-    print(arm.angle)
-    #angleServo.angle(angleBoard[str(spot)])
+    armProg = arm.angle
+    sleep(.25)
+    while arm.angle != distBoard['0']: # code to move arm smoothly
+        if abs(armProg - distBoard['0']) < 2:
+            arm.angle = (distBoard['0'])
+            break
+        elif armProg < distBoard['0']:
+            armProg += 1
+        elif armProg > distBoard['0']:
+            armProg -= 1
+        arm.angle = (armProg) 
+        sleep(.0001)
+    armProg = spinny.angle
+    spinny.angle = (angleBoard['0'] + offset)
+    while spinny.angle != angleBoard['0'] + offset: # code to move arm turn smoothly
+        if abs(armProg - angleBoard['0'] + offset) < 2:
+            spinny.angle = (angleBoard['0'] + offset)
+            break
+        elif armProg < angleBoard['0'] + offset:
+            armProg += 1
+        elif armProg > angleBoard['0'] + offset:
+            armProg -= 1
+        spinny.angle = (armProg) 
+        sleep(.0001)
+
+def scan():
+    scanN = 1
+    while scanN < 10:
+        arm.angle = distBoard[str(scanN)]
+        sleep(.25)
+        spinny.angle = angleBoard[str(scanN)]
+        sleep(.4)
+        if (color.value - colorBase) > 3000:
+            if theBoard[str(scanN)] != 'X':
+                theBoard[str(scanN)] = 'X'
+                break
+        print(scanN)
+
+
+        if scanN < 3:
+            scanN += 1
+        elif scanN == 3:
+            scanN = 6
+        elif scanN > 4 and scanN < 7:
+            scanN -= 1
+        elif scanN == 4:
+            scanN = 7
+        elif scanN > 6:
+            scanN += 1
+
 
 arm.angle = distBoard['5']
 spinny.angle = 90 + offset
+sleep(.3)
+for i in range(10):
+    colorBase += color.value
+    sleep(.05)
+colorBase /= 10
+print(colorBase)
+scan()
 print("Move with the numpad.")
 sleep(1)
 
