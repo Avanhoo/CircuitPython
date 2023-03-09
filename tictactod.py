@@ -12,7 +12,7 @@ end = 0 # if the game has ended
 plan = 0 # where the AI is planning to move
 extend = 0 # how far out the arm is
 twist = 0 # angle of turn of the arm
-offset = 3
+offset = 6
 armProg = 96
 colorBase = 0
 scanN = 1
@@ -190,11 +190,11 @@ def scan():
         spinny.angle = angleBoard[str(scanN)]
         sleep(.4)
         if (color.value - colorBase) > 3000:
-            if theBoard[str(scanN)] != 'X':
+            if theBoard[str(scanN)] != ('X' or 'O'):
                 theBoard[str(scanN)] = 'X'
                 break
         print(scanN)
-
+        sleep(.5)
 
         if scanN < 3:
             scanN += 1
@@ -216,7 +216,7 @@ for i in range(10):
     sleep(.05)
 colorBase /= 10
 print(colorBase)
-scan()
+#scan()
 print("Move with the numpad.")
 sleep(1)
 
