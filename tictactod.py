@@ -230,7 +230,7 @@ for i in range(5): # The main tic tac toe loop
     printBoard(theBoard)
     print("--------------------------------")
 
-# Start Removal
+#Start
     print("Where Would you like to move?")
     move = input("")
 
