@@ -185,15 +185,15 @@ def place(spot): # Code to move the arm to a specified place on the board
 def scan():
     scanN = 1
     while scanN < 10:
-        arm.angle = distBoard[str(scanN)]
-        sleep(.25)
-        spinny.angle = angleBoard[str(scanN)]
-        sleep(.4)
-        if (color.value - colorBase) > 3000:
-            if theBoard[str(scanN)] != 'X':
+        if theBoard[str(scanN)] != 'X' and theBoard[str(scanN)] != 'O':
+            arm.angle = distBoard[str(scanN)]
+            sleep(.25)
+            spinny.angle = angleBoard[str(scanN)]
+            sleep(.4)
+            if (color.value - colorBase) > 3000:
                 theBoard[str(scanN)] = 'X'
                 break
-        print(scanN)
+            print(scanN)
 
 
         if scanN < 3:
@@ -229,6 +229,8 @@ for i in range(5): # The main tic tac toe loop
     turn = 0
     printBoard(theBoard)
     print("--------------------------------")
+
+# Start Removal
     print("Where Would you like to move?")
     move = input("")
 
@@ -255,6 +257,7 @@ for i in range(5): # The main tic tac toe loop
     except:
         print("Invalid move, try again")
         continue
+# End Removal
 
     checkWin()
     if end == 1:
