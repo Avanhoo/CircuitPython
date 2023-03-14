@@ -3,6 +3,7 @@
 - [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#ultrasonic-adventures)
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#lcd-shenanigans)
 - [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
+- [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
 
 # Servo Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
@@ -241,6 +242,65 @@ while True:
     
 ## Reflection
 It took me a long time to find PWM code that made enough sense to work. I still don't really get it, but the rest was easy.
+
+
+
+
+# Temperature Sensor
+    
+## Video
+
+![ezgif com-video-to-gif (1)](https://user-images.githubusercontent.com/113116247/225033654-9b304b5f-3675-4836-9ecf-b80ef53a3a4d.gif)
+
+## Code   
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+```
+
+import board
+from analogio import AnalogIn
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+from time import sleep
+from simpleio import map_range
+
+raw = AnalogIn(board.A2)
+temp = 0
+tChange = 0
+i2c = board.I2C()
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+
+while True:
+    #temp = map_range(raw.value, 0, 100, 0, 100)
+    temp = round((raw.value-500)/ 576,1)
+    if tChange != temp:    
+        lcd.clear()
+        lcd.print("T: " + str(temp) +"C  " + str(round((temp * 1.8) + 32,1)) + "F ")
+        if temp > 24:
+            lcd.print("Too Hawt")
+        elif temp < 22:
+            lcd.print("Too Cold")
+        else:
+            lcd.print("Perfect")
+        tChange = temp
+        print(temp)
+    sleep(.1) 
+    ```
+</p>  
+    
+</details>
+    
+## Reflection
+
+I had a very easy job making the lcd work as I already had code for it, though many people had lcd troubles.
+The temperature sensor gave a very large output (think in the ten thousands), and though I found formulas to convert it to degrees,
+they didn't work, so I just found a random number to multiply it by that worked in giving me a degree reading.
+
+
+
 
 # Next Assignment
     
