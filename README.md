@@ -5,6 +5,8 @@
 - [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
 - [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
 
+
+
 # Servo Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
 Libraries required:
@@ -66,6 +68,8 @@ Libraries required:
 ## Reflection
 I don't really know how any of the pwm outputs work, but this project has reminded me that circuitpython is inferior in every way to Arduino. Still, I now know how to do inputs & outputs. 
 
+    
+    
 # Ultrasonic Adventures
 Rainbow_dist.py uses an ultrasonic sensor to map distances from 5-35cm to a red, blue, green gradient.
 Libraries required:
@@ -133,6 +137,8 @@ Libraries required:
 ## Reflection
 It took me a long time to get the color gradients right because I kept confusing myself with the numbers. Thankfully the benevolent ultrasonic sensor decided to work with the library, so that part was painless. 
 
+    
+    
 # LCD Shenanigans
 Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchio and a few custom lcd libraries for circuitpython.
 
@@ -205,6 +211,8 @@ Lcd.py is an lcd controller that uses inputs from capacitive touch. Needs touchi
 ## Reflection
 I decided to go with capacitive touch instead of buttons for this one, which required the use of a 1 million Ω resistor. Don't know why, but the capacitive touch things are super duper sensitive, and if this resistor was unplugged at any point the whole thing crashed. As far as the lcd control went, it wasn't bad, but there were some pretty hilarious outputs when I forgot to clear the screen and it looped back onto itself.
 
+    
+    
 # Motor Control
 Control the power of a motor with a potentiometer.
     
@@ -245,9 +253,8 @@ It took me a long time to find PWM code that made enough sense to work. I still 
 
 
 
-
 # Temperature Sensor
-    
+    I'm using a TMP36 temperature sensor to display temperature on a 2x16 lcd.
 ## Video
 
 ![ezgif com-video-to-gif (1)](https://user-images.githubusercontent.com/113116247/225033654-9b304b5f-3675-4836-9ecf-b80ef53a3a4d.gif)
@@ -257,37 +264,38 @@ It took me a long time to find PWM code that made enough sense to work. I still 
 <summary><b>Click to Show<b></summary>
     
 <p>
+    
 ```
 
-import board
-from analogio import AnalogIn
-from lcd.lcd import LCD
-from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
-from time import sleep
-from simpleio import map_range
+    import board
+    from analogio import AnalogIn
+    from lcd.lcd import LCD
+    from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+    from time import sleep
+    from simpleio import map_range
 
-raw = AnalogIn(board.A2)
-temp = 0
-tChange = 0
-i2c = board.I2C()
-lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+    raw = AnalogIn(board.A2)
+    temp = 0
+    tChange = 0
+    i2c = board.I2C()
+    lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 
 
-while True:
-    #temp = map_range(raw.value, 0, 100, 0, 100)
-    temp = round((raw.value-500)/ 576,1)
-    if tChange != temp:    
-        lcd.clear()
-        lcd.print("T: " + str(temp) +"C  " + str(round((temp * 1.8) + 32,1)) + "F ")
-        if temp > 24:
-            lcd.print("Too Hawt")
-        elif temp < 22:
-            lcd.print("Too Cold")
-        else:
-            lcd.print("Perfect")
-        tChange = temp
-        print(temp)
-    sleep(.1) 
+    while True:
+        #temp = map_range(raw.value, 0, 100, 0, 100)
+        temp = round((raw.value-500)/ 576,1)
+        if tChange != temp:    
+            lcd.clear()
+            lcd.print("T: " + str(temp) +"C  " + str(round((temp * 1.8) + 32,1)) + "F ")
+            if temp > 24:
+                lcd.print("Too Hawt")
+            elif temp < 22:
+                lcd.print("Too Cold")
+            else:
+                lcd.print("Perfect")
+            tChange = temp
+            print(temp)
+        sleep(.1) 
     ```
 </p>  
     
@@ -295,10 +303,7 @@ while True:
     
 ## Reflection
 
-I had a very easy job making the lcd work as I already had code for it, though many people had lcd troubles.
-The temperature sensor gave a very large output (think in the ten thousands), and though I found formulas to convert it to degrees,
-they didn't work, so I just found a random number to multiply it by that worked in giving me a degree reading.
-
+I had a very easy job making the lcd work as I already had code for it, though lcd's are often finicky. The temperature sensor gave a very large number as an output (10,000+), and though I found formulas to convert it to degrees, they didn't work, so I just found a random number to multiply it by that worked in giving me a degree reading. I'm not sure if this is accurate to be honest, as I believe the output scales with voltage, and I didn't do any fancy multiplication.
 
 
 
