@@ -11,11 +11,20 @@ button = board(2)
 rot = rotaryio.IncrementalEncoder(3, 4)
 spin = 0
 lastSpin = 0
+speed = 1
 
 while True:
     spin = rot.position
+    if spin > 3:
+        spin = 1
+    elif spin <1:
+        spin = 3
     if spin != lastSpin:
         print(spin)
         lcd.clear()
         lcd.print(spin)
     lastSpin = spin
+    if button == True:
+        speed = spin
+    if speed == 1:
+        pass #red led
