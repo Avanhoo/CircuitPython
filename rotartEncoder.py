@@ -8,18 +8,22 @@ import rotaryio
 
 i2c = board.I2C()
 lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
-button = board(2)
+lcd.print("Please?")
+sleep(1)
+button = DigitalInOut(2)
+button.direction = 
 rot = rotaryio.IncrementalEncoder(3, 4)
-Rled = AnalogOut(8) #Setup for the 3 lights
-Yled = AnalogOut(9)
-Gled = AnalogOut(10)
+Rled = AnalogOut(board.A0) #Setup for the 3 lights
+Yled = AnalogOut(board.A1)
+Gled = AnalogOut(board.A2)
 
 Trafc = {1: 1, 2: 0, 3: 0}
 spin = 1
 lastSpin = 1
 speed = 1
 
-
+lcd.print("Begin")
+sleep(1)
 while True:
     spin = rot.position
     if spin > 3: # Keeps spin from 1-3
