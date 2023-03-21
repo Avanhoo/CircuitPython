@@ -387,7 +387,6 @@ The goal here was to create a little traffic light system controlled by a rotary
 This code was very finicky. The rotary encoder I used needed a divisor of 2 instead of the default of 4 (thanks River), but you can change this value to adjust the "sensitivity" of the encoder. I had forgotten how to do all of my analog and digital inputs and outputs, so that's fun. Not much more to say. The rotary encoder library works very well, but the pins on the encoder are deceiving. You would think that 'CLK' is the button pin because it sounds like "click", but no, it's not, 'SW' is the button pin for some reason.
 
 
----
 
 # Next Assignment
     
