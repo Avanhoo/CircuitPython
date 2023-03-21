@@ -12,7 +12,7 @@ lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
 sleep(1)
 button = DigitalInOut(board.D2)
 button.direction = Direction.INPUT
-button.pull = Pull.DOWN
+button.pull = Pull.UP
 rot = rotaryio.IncrementalEncoder(board.D3, board.D4, divisor=2) # Make sure the divisor is 2 so that it registers every increment
 Rled = DigitalInOut(board.D8) #         Setup for the 3 lights
 Rled.direction = Direction.OUTPUT
