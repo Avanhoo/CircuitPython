@@ -399,10 +399,12 @@ This code was very finicky. The rotary encoder I used needed a divisor of 2 inst
 <summary><b>Click to Show<b></summary>
     
 <p>
-```
     
+```
 
-    ```
+
+
+```
 </p>  
     
 </details>
