@@ -297,6 +297,7 @@ while True:
         tChange = temp
         print(temp)
     sleep(.1) 
+                       
 ```
 </p>  
     
@@ -319,6 +320,7 @@ The goal here was to create a little traffic light system controlled by a rotary
 <summary><b>Click to Show<b></summary>
     
 <p>
+    
 ```
     
     # Afton Van Hooser
@@ -378,7 +380,7 @@ The goal here was to create a little traffic light system controlled by a rotary
         Gled.value = Trafc[3]
         while not button.value: # Stops you from accidentally selecting another color when the button is pressed
             sleep(.1)
-    ```
+```
 </p>  
     
 </details>
