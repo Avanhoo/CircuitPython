@@ -1,3 +1,5 @@
+# Afton Van Hooser
+# Rotary encoder traffic light menu
 import board
 from digitalio import DigitalInOut, Direction, Pull
 from lcd.lcd import LCD
