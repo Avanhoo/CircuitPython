@@ -4,6 +4,7 @@
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#lcd-shenanigans)
 - [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
 - [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
+- [Rotary Encoder](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#rotary-encoder)
 
 
 
