@@ -1,4 +1,5 @@
 # Cable of Tontents
+- [Hello Circuitpython](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#hello-circuitpython)
 - [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#servo-work)
 - [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#ultrasonic-adventures)
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#lcd-shenanigans)
@@ -8,6 +9,47 @@
 - [Photointerrupter](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#photointerrupter)
 
 
+# Hello Circuitpython
+This was our first assignment with circuitpython (as opposed to arduino), and we wanted to control the onboard neopixel led.
+
+## Proof
+
+
+## Code
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+    
+```
+import board
+import neopixel
+from time import sleep
+
+r = 0
+g = 0
+b = 0
+
+dot = neopixel.NeoPixel(board.NEOPIXEL, 1)
+dot.brightness = .25
+
+print("Make it red!")
+
+while True:
+    r = int(input("How much red?"))
+    g = int(input("How much green?"))
+    b = int(input("How much blue?"))
+    sleep(1)
+    print("")
+    dot.fill((r,g,b))
+    
+```
+</p>  
+    
+</details>
+    
+## Reflection
+I had used python before, so this wasn't too big of a shake-up for me, but it'll take some time to remember everything.
 
 # Servo Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
