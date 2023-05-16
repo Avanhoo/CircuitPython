@@ -1,12 +1,55 @@
 # Cable of Tontents
+- [Hello Circuitpython](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#hello-circuitpython)
 - [Servo Work](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#servo-work)
 - [Ultrasonic_Adventures](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#ultrasonic-adventures)
 - [LCD_Shenanigans](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#lcd-shenanigans)
 - [Motor Control](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#motor-control)
 - [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
 - [Rotary Encoder](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#rotary-encoder)
+- [Photointerrupter](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#photointerrupter)
 
 
+# Hello Circuitpython
+This was our first assignment with circuitpython (as opposed to arduino), and we wanted to control the onboard neopixel led.
+
+## Proof
+
+
+## Code
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+    
+```
+import board
+import neopixel
+from time import sleep
+
+r = 0
+g = 0
+b = 0
+
+dot = neopixel.NeoPixel(board.NEOPIXEL, 1)
+dot.brightness = .25
+
+print("Make it red!")
+
+while True:
+    r = int(input("How much red?"))
+    g = int(input("How much green?"))
+    b = int(input("How much blue?"))
+    sleep(1)
+    print("")
+    dot.fill((r,g,b))
+    
+```
+</p>  
+    
+</details>
+    
+## Reflection
+I had used python before, so this wasn't too big of a shake-up for me, but it'll take some time to remember everything.
 
 # Servo Work
 Servo.py is a piece of code made to control a 180° servo. One button will spin the servo right, and the other left. 
@@ -390,6 +433,58 @@ This code was very finicky. The rotary encoder I used needed a divisor of 2 inst
 
 
 
+# Photointerrupter
+We needed to do photinterrupters in circuitpython.
+    
+## Video
+![ezgif com-optimize (1)](https://user-images.githubusercontent.com/113116247/227223146-cff0d73e-54dd-402c-bc37-3234e31b30ad.gif)
+
+## Code   
+<details>
+<summary><b>Click to Show<b></summary>
+    
+<p>
+    
+```
+import board
+from time import monotonic, sleep
+from digitalio import DigitalInOut, Pull, Direction
+
+from lcd.lcd import LCD
+from lcd.i2c_pcf8574_interface import I2CPCF8574Interface
+i2c = board.I2C()
+lcd = LCD(I2CPCF8574Interface(i2c, 0x27), num_rows=2, num_cols=16)
+
+now = monotonic()  # Time in seconds since power on
+photo = DigitalInOut(board.D8)
+photo.direction = Direction.INPUT
+photo.pull = Pull.UP
+count = 0
+timeStart = 0
+
+while True:
+    if photo.value:
+        count += 1
+        while photo.value:
+            pass
+    if (float(timeStart + 4) < monotonic()):
+        print("Interrupts: " + str(count))
+        lcd.clear()
+        lcd.print("Interrupts: " + str(count))
+        count = 0
+        timeStart = monotonic()
+
+
+```
+</p>  
+    
+</details>
+    
+## Reflection
+This was very easy, just add 1 when pin.value and you're good.
+
+
+
 # Next Assignment
     
 ## Video
@@ -410,6 +505,3 @@ This code was very finicky. The rotary encoder I used needed a divisor of 2 inst
 </details>
     
 ## Reflection
-
-
-
