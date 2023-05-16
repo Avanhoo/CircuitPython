@@ -57,7 +57,7 @@ def pid(Set,ierr,dt,KP,KI,KD):
         # Parameters in terms of PID coefficients
         op0 = 0
         # upper and lower bounds on heater level
-        ophi = 200
+        ophi = 100
         oplo = 10
         # calculate the error
         print("deg = "+str(deg))
@@ -87,7 +87,7 @@ def pid(Set,ierr,dt,KP,KI,KD):
 while True:
     if toggle == 1:
         print(str(pid(Set,ierr,dt,KP,KI,KD)))
-        fan.duty_cycle = int(map_range(op, 0, 200, 26160, 65400))
+        fan.duty_cycle = int(map_range(op, 0, 100, 6540, 49050)) # out of 65400
         print("-------------")
     else:
         fan.duty_cycle = 0
