@@ -13,7 +13,7 @@ end = 0 # if the game has ended
 plan = 0 # where the AI is planning to move
 extend = 0 # how far out the arm is
 twist = 0 # angle of turn of the arm
-offset = 3
+offset = 1
 armProg = 96
 colorBase = 0
 Nscan = 1
@@ -187,15 +187,41 @@ def place(spot): # Code to move the arm to a specified place on the board
 
 def scan():
     Nscan = 1
+    global offset
+    offset -= 6
+    print ("offest: " + str(offset))
     print ("B: "+ str(colorBase))
     while Nscan < 10:
         if theBoard[str(Nscan)] != 'O' and theBoard[str(Nscan)] != 'X':
-            arm.angle = distBoard[str(Nscan)]
-            #sleep(.3)
-            spinny.angle = angleBoard[str(Nscan)]
-            sleep(.3)
-            for e in range (1,7):                         # PROBLEM FIX PROBLEM
-                if (abs(color.value - colorBase)/((color.value + colorBase)/2))*100 > 22.5:
+
+            armProg = arm.angle
+            sleep(.25)
+            while arm.angle != distBoard[str(Nscan)]-5: # code to move arm smoothly
+                if abs(armProg - distBoard[str(Nscan)]-5) < 2:
+                    arm.angle = (distBoard[str(Nscan)]-5)
+                    break
+                elif armProg < distBoard[str(Nscan)]-5:
+                    armProg += 1
+                elif armProg > distBoard[str(Nscan)]-5:
+                    armProg -= 1
+                arm.angle = (armProg) 
+
+            armProg = spinny.angle
+            while spinny.angle != (angleBoard[str(Nscan)] + offset): # code to move arm turn smoothly
+                if abs(armProg - angleBoard[str(Nscan)] + offset) < 2: # NOT WORKING
+                    spinny.angle = (angleBoard[str(Nscan)] + offset)
+                    print("good")
+                    break
+                elif armProg < (angleBoard[str(Nscan)] + offset):
+                    armProg += 1
+                elif armProg > (angleBoard[str(Nscan)] + offset):
+                    armProg -= 1
+                spinny.angle = (armProg) 
+                print(str(armProg - angleBoard[str(Nscan)] + offset))
+                print(str(angleBoard[str(Nscan)] + offset - armProg))
+
+            for e in range (1,10):                         # PROBLEM FIX PROBLEM
+                if abs((color.value - colorBase) / colorBase*100) > 50:
                     print(color.value)
                     print("O at " + str(Nscan))
                     theBoard[str(Nscan)] = 'O'
@@ -220,12 +246,13 @@ def scan():
             Nscan += 1
     if (Nscan > 9) and (Nscan != 20):
         scan()
+    offset += 6
 
 
 arm.angle = distBoard['5']
 spinny.angle = 90 + offset
 sleep(.3)
-for i in range(10):
+for i in range(9):
     colorBase += color.value
     sleep(.05)
 colorBase /= 10
