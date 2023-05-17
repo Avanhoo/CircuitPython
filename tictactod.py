@@ -208,7 +208,7 @@ def scan():
 
             armProg = spinny.angle
             while spinny.angle != (angleBoard[str(Nscan)] + offset): # code to move arm turn smoothly
-                if abs(armProg - angleBoard[str(Nscan)] + offset) < 2: # NOT WORKING
+                if abs(armProg - angleBoard[str(Nscan)] + offset) < 2: # NOT WORKING SWITCH VARIABLES
                     spinny.angle = (angleBoard[str(Nscan)] + offset)
                     print("good")
                     break
