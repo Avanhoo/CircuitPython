@@ -4,7 +4,7 @@ from time import sleep
 import pwmio
 import servo
 
-offset = 3
+offset = 1
 
 num = "90"
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
