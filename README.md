@@ -478,12 +478,14 @@ while True:
 ```
 </p>  
     
-</details>
-    
+</details>    
+
 ## Reflection
 This was very easy, just add 1 when pin.value and you're good.
 
-
+# Onshape Certification
+I feel like the preparation for the exam helped a lot and made me prepared. All of the things I had to model / assemble on the test were *very* similar to the practice documents.
+![image](https://github.com/Avanhoo/Intermediate-CAD/assets/113116247/ecaded82-1bc0-4d47-81dd-beb629edf0fa)
 
 # Next Assignment
     
