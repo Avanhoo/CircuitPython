@@ -7,6 +7,7 @@
 - [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
 - [Rotary Encoder](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#rotary-encoder)
 - [Photointerrupter](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#photointerrupter)
+- [Onshape Certificate]((https://github.com/Avanhoo/CircuitPython/blob/master/README.md#onshape-certificate)
 
 
 # Hello Circuitpython
