@@ -88,14 +88,12 @@ def grab(direction): # Code to pick up and drop the magnet
     if direction == 0: # 0 Picks Up
         uppy.angle = (0) # 0 Is lowest, 180 is highest
         sleep(1)
-        for i in range(0,90):
+        for i in range(135):
             uppy.angle = (i)
         sleep(.25)
     elif direction == 1: # 1 Drops
         uppy.angle = (180)
-        sleep(.4)
-        uppy.angle = (90)
-        sleep(.4)
+        sleep(1)
 
 def place(spot): # Code to move the arm to a specified place on the board
     armProg = arm.angle
@@ -195,20 +193,20 @@ def scan():
 
             armProg = arm.angle
             sleep(.25)
-            while arm.angle != distBoard[str(Nscan)]-5: # code to move arm smoothly
-                if abs(armProg - (distBoard[str(Nscan)]-5)) < 2:
-                    arm.angle = (distBoard[str(Nscan)]-5)
+            while arm.angle != distBoard[str(Nscan)]-10: # code to move arm smoothly
+                if abs(armProg - (distBoard[str(Nscan)]-10)) < 2:
+                    arm.angle = (distBoard[str(Nscan)]-10)
                     break
-                elif armProg < distBoard[str(Nscan)]-5:
+                elif armProg < distBoard[str(Nscan)]-10:
                     armProg += 2
-                elif armProg > distBoard[str(Nscan)]-5:
+                elif armProg > distBoard[str(Nscan)]-10:
                     armProg -= 2
                 arm.angle = (armProg) 
-                print(armProg - (distBoard[str(Nscan)]-5))
+                print(armProg - (distBoard[str(Nscan)]-10))
 
             armProg = spinny.angle
             while spinny.angle != (angleBoard[str(Nscan)] + offset): # code to move arm turn smoothly
-                if abs(armProg - (angleBoard[str(Nscan)] + offset)) < 2: # NOT WORKING SWITCH VARIABLES
+                if abs(armProg - (angleBoard[str(Nscan)] + offset)) < 2: 
                     spinny.angle = (angleBoard[str(Nscan)] + offset)
                     print("good")
                     break
@@ -220,13 +218,13 @@ def scan():
                 print(str(armProg - (angleBoard[str(Nscan)] + offset)))
 
             for e in range (1,10):                         # PROBLEM FIX PROBLEM
-                if abs((color.value - colorBase) / colorBase*100) > 50:
-                    print(color.value)
+                if abs((color.value - colorBase) / colorBase*100) >25:
                     print("O at " + str(Nscan))
                     theBoard[str(Nscan)] = 'O'
                     Nscan = 20
                     break
                 print(color.value)
+                print(str(abs((color.value - colorBase) / colorBase*100)))
                 e = 1
                 sleep(.1)
             print(Nscan)
