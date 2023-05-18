@@ -13,7 +13,7 @@ end = 0 # if the game has ended
 plan = 0 # where the AI is planning to move
 extend = 0 # how far out the arm is
 twist = 0 # angle of turn of the arm
-offset = 3
+offset = 1
 armProg = 96
 colorBase = 0
 Nscan = 1
@@ -22,7 +22,7 @@ button = DigitalInOut(board.D8)
 button.direction = Direction.INPUT
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 pwm2 = pwmio.PWMOut(board.A5, duty_cycle=2 ** 15, frequency=50)
-uppy = pwmio.PWMOut(board.D7, duty_cycle=0, frequency=50, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A timers
+uppi = pwmio.PWMOut(board.D7, duty_cycle=2, frequency=50, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A timers
 #uppy = pwmio.PWMOut(board.A0, duty_cycle=2 ** 15, frequency=50, variable_frequency=True)
 color = AnalogIn(board.A2)
 
@@ -33,12 +33,13 @@ theBoard = {'7': ' ' , '8': ' ' , '9': ' ' , # The visual board, keeps track of 
 
 distBoard = {'7': 170 , '8': 157 , '9': 170 , # Holds all of the distance data to the board
             '4': 110 , '5': 96 , '6': 110 ,
-            '1': 58 , '2': 30 , '3': 58 , '0': 112}
+            '1': 58 , '2': 30 , '3': 58 , '0': 118}
 angleBoard = {'7': 110 , '8': 90 , '9': 70 , # Holds all of the angle data to the board
             '4':  122, '5': 90 , '6': 61 ,
-            '1': 150 , '2': 90 , '3': 42 , '0': 170}
+            '1': 150 , '2': 90 , '3': 42 , '0': 175}
 arm = servo.Servo(pwm) # The extendy arm servo
 spinny = servo.Servo(pwm2) # The twisty servo
+uppy = servo.Servo(uppi)
 #                                                  ARM SERVO SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
 
 def printBoard(board):
@@ -85,18 +86,16 @@ def checkWin():
 
 def grab(direction): # Code to pick up and drop the magnet
     if direction == 0: # 0 Picks Up
-        uppy.duty_cycle = (3800) # This motor goes from 0 to 65535, but <4800 is clockwise, >4800 is counter clockwise
+        uppy.angle = (0) # 0 Is lowest, 180 is highest
         sleep(1)
-        uppy.duty_cycle = (0)
+        for i in range(0,90):
+            uppy.angle = (i)
         sleep(.25)
-        uppy.duty_cycle = (5800)
-        sleep(1)
     elif direction == 1: # 1 Drops
-        uppy.duty_cycle = (5800)
-        sleep(.35)
-        uppy.duty_cycle = (3800)
-        sleep(.35)
-    uppy.duty_cycle = (0)
+        uppy.angle = (180)
+        sleep(.4)
+        uppy.angle = (90)
+        sleep(.4)
 
 def place(spot): # Code to move the arm to a specified place on the board
     armProg = arm.angle
@@ -187,15 +186,41 @@ def place(spot): # Code to move the arm to a specified place on the board
 
 def scan():
     Nscan = 1
+    global offset
+    offset -= 3
+    print ("offest: " + str(offset))
     print ("B: "+ str(colorBase))
     while Nscan < 10:
         if theBoard[str(Nscan)] != 'O' and theBoard[str(Nscan)] != 'X':
-            arm.angle = distBoard[str(Nscan)]
-            #sleep(.3)
-            spinny.angle = angleBoard[str(Nscan)]
-            sleep(.3)
-            for e in range (1,7):                         # PROBLEM FIX PROBLEM
-                if (abs(color.value - colorBase)/((color.value + colorBase)/2))*100 > 22.5:
+
+            armProg = arm.angle
+            sleep(.25)
+            while arm.angle != distBoard[str(Nscan)]-5: # code to move arm smoothly
+                if abs(armProg - (distBoard[str(Nscan)]-5)) < 2:
+                    arm.angle = (distBoard[str(Nscan)]-5)
+                    break
+                elif armProg < distBoard[str(Nscan)]-5:
+                    armProg += 2
+                elif armProg > distBoard[str(Nscan)]-5:
+                    armProg -= 2
+                arm.angle = (armProg) 
+                print(armProg - (distBoard[str(Nscan)]-5))
+
+            armProg = spinny.angle
+            while spinny.angle != (angleBoard[str(Nscan)] + offset): # code to move arm turn smoothly
+                if abs(armProg - (angleBoard[str(Nscan)] + offset)) < 2: # NOT WORKING SWITCH VARIABLES
+                    spinny.angle = (angleBoard[str(Nscan)] + offset)
+                    print("good")
+                    break
+                elif armProg < (angleBoard[str(Nscan)] + offset):
+                    armProg += 2
+                elif armProg > (angleBoard[str(Nscan)] + offset):
+                    armProg -= 2
+                spinny.angle = (armProg) 
+                print(str(armProg - (angleBoard[str(Nscan)] + offset)))
+
+            for e in range (1,10):                         # PROBLEM FIX PROBLEM
+                if abs((color.value - colorBase) / colorBase*100) > 50:
                     print(color.value)
                     print("O at " + str(Nscan))
                     theBoard[str(Nscan)] = 'O'
@@ -220,20 +245,30 @@ def scan():
             Nscan += 1
     if (Nscan > 9) and (Nscan != 20):
         scan()
+    offset += 3
 
 
 arm.angle = distBoard['5']
 spinny.angle = 90 + offset
+uppy.angle = 90
 sleep(.3)
-for i in range(10):
+for i in range(9):
     colorBase += color.value
     sleep(.05)
 colorBase /= 10
 print(colorBase)
 print("Move with the numpad.")
+sleep(.4)
+uppy.angle = 0
+sleep(1)
+uppy.angle = 90
+sleep(1)
+uppy.angle = 180
 sleep(1)
 
-uppy.duty_cycle = (0)
+#uppy.duty_cycle = (3800)   #This can be used to adjust the height of the magnet, if needed (3800 is down, 5800 is up)
+#sleep(.05)
+#uppy.duty_cycle = (0)
 
 
 for i in range(5): # The main tic tac toe loop
@@ -251,13 +286,13 @@ for i in range(5): # The main tic tac toe loop
     try:
         if move == "]":
             uppy.duty_cycle = (5800)
-            sleep(.125)
+            sleep(.15)
             uppy.duty_cycle = (0)
             i-=1
             continue
         elif move == "[":
             uppy.duty_cycle = (3800)
-            sleep(.125)
+            sleep(.15)
             uppy.duty_cycle = (0)
             i -=1
             continue

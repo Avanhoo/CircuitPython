@@ -7,13 +7,14 @@
 - [Temperature Sensor](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#temperature-sensor)
 - [Rotary Encoder](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#rotary-encoder)
 - [Photointerrupter](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#photointerrupter)
+- [Onshape Certification](https://github.com/Avanhoo/CircuitPython/blob/master/README.md#onshape-certification)
 
 
 # Hello Circuitpython
 This was our first assignment with circuitpython (as opposed to arduino), and we wanted to control the onboard neopixel led.
 
 ## Proof
-
+![ezgif com-resize](https://github.com/Avanhoo/CircuitPython/assets/113116247/9d797874-ac47-484a-b879-d740a6b21724)
 
 ## Code
 <details>
@@ -478,13 +479,18 @@ while True:
 ```
 </p>  
     
-</details>
-    
+</details>    
+
 ## Reflection
 This was very easy, just add 1 when pin.value and you're good.
 
+# Onshape Certification
+I feel like the preparation for the exam helped a lot and made me prepared. All of the things I had to model / assemble on the test were *very* similar to the practice documents.
+    
+![image](https://github.com/Avanhoo/Intermediate-CAD/assets/113116247/ecaded82-1bc0-4d47-81dd-beb629edf0fa)
 
-
+    
+    
 # Next Assignment
     
 ## Video
