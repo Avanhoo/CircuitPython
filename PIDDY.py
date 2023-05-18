@@ -27,7 +27,7 @@ button.direction = digitalio.Direction.INPUT
 button.pull = digitalio.Pull.UP
 #subtract 12.9 degrees
 #variable soup
-KP = 1
+KP = 1.5
 KI = 1
 KD = 1
 encoder.position = 0
@@ -36,7 +36,7 @@ m_edit = False
 update = True
 last_position = -2
 Set = 0
-dt = .1
+dt = .01
 prev = 0
 deg = -12.9
 pdeg = deg
@@ -63,7 +63,7 @@ def pid(Set,ierr,dt,KP,KI,KD):
         print("deg = "+str(deg))
         prev = deg
         
-        deg=((round(float(mpu.gyro[0])+0.038, 1)*(dt)*(180/3.14159))*-1)+prev
+        deg=((round(float(mpu.gyro[0])+0.045, 1)*(dt)*(180/3.14159))*-1)+prev
         # calculate the measurement derivative
         dpv = (deg - prev) / dt
         error = Set-deg
@@ -96,11 +96,11 @@ while True:
     if position > last_position: # Changes the PID values if edit mode is on, changes the menu if edit mode is off
         if m_edit == True:
             if menu == 1:
-                KP += 1
+                KP += .2
             elif menu == 2:
-                KI += 1
+                KI += .2
             elif menu == 3:
-                KD += 1
+                KD += .2
             elif menu == 4:
                 Set += 1
         else:
@@ -108,11 +108,11 @@ while True:
     elif position < last_position:
         if m_edit == True:
             if menu == 1:
-                KP -= 1
+                KP -= .2
             elif menu == 2:
-                KI -= 1
+                KI -= .2
             elif menu == 3:
-                KD -= 1
+                KD -= .2
             elif menu == 4:
                 Set -= 1
         else:
