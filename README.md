@@ -13,7 +13,7 @@
 This was our first assignment with circuitpython (as opposed to arduino), and we wanted to control the onboard neopixel led.
 
 ## Proof
-![ezgif com-optimize](https://github.com/Avanhoo/CircuitPython/assets/113116247/07ca2f30-f42f-4bd9-ab4f-6be86bcb8cf9)
+![ezgif com-resize](https://github.com/Avanhoo/CircuitPython/assets/113116247/9d797874-ac47-484a-b879-d740a6b21724)
 
 ## Code
 <details>
