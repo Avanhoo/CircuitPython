@@ -88,11 +88,14 @@ def grab(direction): # Code to pick up and drop the magnet
     if direction == 0: # 0 Picks Up
         uppy.angle = (0) # 0 Is lowest, 180 is highest
         sleep(1)
-        for i in range(135):
+        for i in range(160):
             uppy.angle = (i)
         sleep(.25)
     elif direction == 1: # 1 Drops
         uppy.angle = (180)
+        arm.angle += 10
+        sleep(.1)
+        arm.angle -= 10
         sleep(1)
 
 def place(spot): # Code to move the arm to a specified place on the board
@@ -186,34 +189,37 @@ def scan():
     Nscan = 1
     global offset
     offset -= 3
+    spinny.angle = 90
     print ("offest: " + str(offset))
     print ("B: "+ str(colorBase))
     while Nscan < 10:
         if theBoard[str(Nscan)] != 'O' and theBoard[str(Nscan)] != 'X':
-
+            if Nscan == 3:
+                angleBoard['3'] = 30
+                distBoard['3'] = 65
             armProg = arm.angle
             sleep(.25)
             while arm.angle != distBoard[str(Nscan)]-10: # code to move arm smoothly
-                if abs(armProg - (distBoard[str(Nscan)]-10)) < 2:
+                if abs(armProg - (distBoard[str(Nscan)]-10)) < 3:
                     arm.angle = (distBoard[str(Nscan)]-10)
                     break
                 elif armProg < distBoard[str(Nscan)]-10:
-                    armProg += 2
+                    armProg += 3
                 elif armProg > distBoard[str(Nscan)]-10:
-                    armProg -= 2
+                    armProg -= 3
                 arm.angle = (armProg) 
                 print(armProg - (distBoard[str(Nscan)]-10))
 
             armProg = spinny.angle
             while spinny.angle != (angleBoard[str(Nscan)] + offset): # code to move arm turn smoothly
-                if abs(armProg - (angleBoard[str(Nscan)] + offset)) < 2: 
+                if abs(armProg - (angleBoard[str(Nscan)] + offset)) < 4: 
                     spinny.angle = (angleBoard[str(Nscan)] + offset)
                     print("good")
                     break
                 elif armProg < (angleBoard[str(Nscan)] + offset):
-                    armProg += 2
+                    armProg += 4
                 elif armProg > (angleBoard[str(Nscan)] + offset):
-                    armProg -= 2
+                    armProg -= 4
                 spinny.angle = (armProg) 
                 print(str(armProg - (angleBoard[str(Nscan)] + offset)))
 
@@ -244,6 +250,8 @@ def scan():
     if (Nscan > 9) and (Nscan != 20):
         scan()
     offset += 3
+    angleBoard['3'] = 42
+    distBoard['3'] = 58
 
 
 arm.angle = distBoard['5']
