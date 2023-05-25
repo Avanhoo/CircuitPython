@@ -63,7 +63,7 @@ def pid(Set,ierr,dt,KP,KI,KD):
         print("deg = "+str(deg))
         prev = deg
         
-        deg=((round(float(mpu.gyro[0])+0.045, 1)*(dt)*(180/3.14159))*-1)+prev
+        deg=((round(float(mpu.gyro[0])+0.045, 1)*(dt)*(180/3.14159)))+prev
         # calculate the measurement derivative
         dpv = (deg - prev) / dt
         error = Set-deg
