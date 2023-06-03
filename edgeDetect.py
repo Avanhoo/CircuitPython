@@ -16,13 +16,17 @@ img_blur = cv2.GaussianBlur(img_gray, (7,7), 0)
  
  
 edges = cv2.Canny(image=img_blur, threshold1=65, threshold2=10) # Canny Edge Detection
+#edgesB = cv2.GaussianBlur(edges, (3,3), 0) # Makes edge smoother
+#edges = cv2.addWeighted(edges, 1, edgesB, 1, 0.9) # Makes a "glowing" edge
+edges = cv2.merge((edges,edges,edges))
+   
 cv2.imshow('Canny Edge Detection', edges) # Display Canny Edge Detection Image
 
 cv2.waitKey(0)
 cv2.imwrite('edge.jpg', edges)
 
 
-merge = cv2.addWeighted(img_gray, 1, edges, 1, 0.0)
+merge = cv2.addWeighted(img, 1, edges, 1, 0.0)
 cv2.imshow('Merged', merge)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
