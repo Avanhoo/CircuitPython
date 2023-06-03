@@ -22,7 +22,7 @@ cv2.waitKey(0)
 cv2.imwrite('edge.jpg', edges)
 
 
-merge = cv2.addWeighted(img_gray, .75, edges, .25, 0.0)
+merge = cv2.addWeighted(img_gray, 1, edges, 1, 0.0)
 cv2.imshow('Merged', merge)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
