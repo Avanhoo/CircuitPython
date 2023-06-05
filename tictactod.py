@@ -13,7 +13,7 @@ end = 0 # if the game has ended
 plan = 0 # where the AI is planning to move
 extend = 0 # how far out the arm is
 twist = 0 # angle of turn of the arm
-offset = 1
+offset = 1 # Used to make the turning servo be where it should be, as it may be mounted slightly off. In degrees.
 armProg = 96
 colorBase = 0
 Nscan = 1
@@ -22,9 +22,8 @@ button = DigitalInOut(board.D8)
 button.direction = Direction.INPUT
 pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 pwm2 = pwmio.PWMOut(board.A5, duty_cycle=2 ** 15, frequency=50)
-uppi = pwmio.PWMOut(board.D7, duty_cycle=2, frequency=50, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A timers
-#uppy = pwmio.PWMOut(board.A0, duty_cycle=2 ** 15, frequency=50, variable_frequency=True)
-color = AnalogIn(board.A2)
+uppi = pwmio.PWMOut(board.D7, duty_cycle=2, frequency=50, variable_frequency=True) # Sets up a PWM output for the magnet servo as there are no more A pin timers
+color = AnalogIn(board.A2) # The imput for the infrared sensor
 
 
 theBoard = {'7': ' ' , '8': ' ' , '9': ' ' , # The visual board, keeps track of placed O's and X's
@@ -40,7 +39,7 @@ angleBoard = {'7': 110 , '8': 90 , '9': 70 , # Holds all of the angle data to th
 arm = servo.Servo(pwm) # The extendy arm servo
 spinny = servo.Servo(pwm2) # The twisty servo
 uppy = servo.Servo(uppi)
-#                                                  ARM SERVO SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
+#                                                  ARM SERVO RACK SHOULD HAVE ONE TOOTH SHOWING IN THE BACK WHEN AT '5' POSITION
 
 def printBoard(board):
     print("")
@@ -50,7 +49,7 @@ def printBoard(board):
     print('-+-+-')
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
-def checkWin():
+def checkWin(): # Checks for a 3 in a row
             global end
             if theBoard['7'] == theBoard['8'] == theBoard['9'] and theBoard['9'] != ' ': # across the top
                 end += 1      
@@ -101,7 +100,7 @@ def grab(direction): # Code to pick up and drop the magnet
 def place(spot): # Code to move the arm to a specified place on the board
     armProg = arm.angle
     sleep(.25)
-    while arm.angle != distBoard['0']: # code to move arm smoothly
+    while arm.angle != distBoard['0']: # code to move arm smoothly by moving the set angle 2 degrees at a time
         if abs(armProg - distBoard['0']) < 2:
             arm.angle = (distBoard['0'])
             break
@@ -113,7 +112,7 @@ def place(spot): # Code to move the arm to a specified place on the board
         sleep(.0001)
     armProg = spinny.angle
     spinny.angle = (angleBoard['0'] + offset)
-    while spinny.angle != angleBoard['0'] + offset: # code to move arm turn smoothly
+    while spinny.angle != angleBoard['0'] + offset: # code to make arm turn smoothly
         if abs(armProg - angleBoard['0'] + offset) < 2:
             spinny.angle = (angleBoard['0'] + offset)
             break
@@ -185,10 +184,10 @@ def place(spot): # Code to move the arm to a specified place on the board
         spinny.angle = (armProg) 
         sleep(.0001)
 
-def scan():
-    Nscan = 1
+def scan(): 
+    Nscan = 1 # This keeps track of what square is being scanned
     global offset
-    offset -= 3
+    offset -= 3 # This make the arm go a little more to the right, so that the infrared sensor is directly above the piece instead of the magnet, so it can see better
     spinny.angle = 90
     print ("offest: " + str(offset))
     print ("B: "+ str(colorBase))
@@ -237,7 +236,7 @@ def scan():
 
         if Nscan == 20:
             pass
-        elif Nscan < 3:
+        elif Nscan < 3: # This mess of elifs makes the arm scan in the most efficient way instead of going back and forth
             Nscan += 1
         elif Nscan == 3:
             Nscan = 6
@@ -250,7 +249,7 @@ def scan():
     if (Nscan > 9) and (Nscan != 20):
         scan()
     offset += 3
-    angleBoard['3'] = 42
+    angleBoard['3'] = 42 # Because it wouldn't scan '3' correctly, we changed '3' for just this function :)
     distBoard['3'] = 58
 
 
@@ -271,11 +270,7 @@ uppy.angle = 90
 sleep(1)
 uppy.angle = 180
 sleep(1)
-
-#uppy.duty_cycle = (3800)   #This can be used to adjust the height of the magnet, if needed (3800 is down, 5800 is up)
-#sleep(.05)
-#uppy.duty_cycle = (0)
-
+     
 
 for i in range(5): # The main tic tac toe loop
     plan = 0
@@ -284,37 +279,7 @@ for i in range(5): # The main tic tac toe loop
     printBoard(theBoard)
     print("--------------------------------")
 
-#Start
-    '''
-    print("Where Would you like to move?")
-    move = input("")
-
-    try:
-        if move == "]":
-            uppy.duty_cycle = (5800)
-            sleep(.15)
-            uppy.duty_cycle = (0)
-            i-=1
-            continue
-        elif move == "[":
-            uppy.duty_cycle = (3800)
-            sleep(.15)
-            uppy.duty_cycle = (0)
-            i -=1
-            continue
-        elif int(move) < 10 and  int(move) > 0 and theBoard[move] == " ":
-            theBoard[str(move)] = "O"
-            round += 1
-        else:
-            print("Invalid move, try again")
-            i -= 1
-            continue
-    except:
-        print("Invalid move, try again")
-        continue
-    '''
-# End Removal
-    while button.value:
+    while button.value: # This is the red button that you press to signal you've taken your turn
         sleep(.5)
     print("Pressed!")
     scan()
@@ -329,7 +294,7 @@ for i in range(5): # The main tic tac toe loop
     printBoard(theBoard)
     sleep(1)
     turn = 1
-    if True:
+    if True: # For some reason I did this all manually. It checks if you're about to win, and if you are places a piece to block you 
         if theBoard['7'] == theBoard['8'] == "X" and theBoard['9'] == ' ': # across the top
             place(9)
             round += 1
@@ -524,17 +489,17 @@ for i in range(5): # The main tic tac toe loop
             round += 1
             turn += 1
 
-        else:
-            if round == 2 and theBoard['5'] == ' ':
+        else: # This is what it does if you're not about to win
+            if round == 2 and theBoard['5'] == ' ': # If you didn't place in the middle on the first turn it has a high chance to place there
                 if random.randint(1,2) == 1:
                     place(5)
-                else:
+                else: # If not, it'll place in a random place
                     place(random.randint(1,9))
-                round += 1
+                round += 1 # Advances the round count by one
             else:
                 while plan != 10:
-                    plan = random.randint(1,9)
-                    if theBoard[str(plan)] == ' ':
+                    plan = random.randint(1,9) # Comes up with a random spot to play
+                    if theBoard[str(plan)] == ' ': # Checks if that spot is empty
                         place(plan)
                         plan = 10
                         round += 1
@@ -551,5 +516,5 @@ if turn == 0:
 elif turn == 2:
     print(" ****  AI  wins. ****")
     
-else:
+else: # This is the tie message. idk man
     print("0 wuns")
