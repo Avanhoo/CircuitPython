@@ -18,21 +18,22 @@ cap = cv2.VideoCapture(0) # Camera is 480 x 640
 
 while True:
     ret, frame = cap.read()
-    #frame = cv2.resize(frame, (1280, 960), fx = 0, fy = 0) # Enlarges the video 
+    frame = cv2.resize(frame, (1280, 960), fx = 0, fy = 0) # Enlarges the video 
  
-    #frame = frame.astype('uint8') #MAYBE
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Does edge detection in b&w
-    blur = cv2.GaussianBlur(frame, (3,3), 0) 
+    frame = frame.astype('uint8') #MAYBE
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Does edge detection in b&w
+    blur = cv2.GaussianBlur(gray, (3,3), 0) 
 
-    edges = auto_canny(blur) # Canny edge detection
-    edgesB = cv2.GaussianBlur(edges, (3,3), 0) # Makes edge smoother
-    edges = cv2.addWeighted(edges, 1, edgesB, 1, 0.9) # Makes a "glowing" edge
+    edges = cv2.Sobel(src=blur, ddepth=2, dx=1, dy=1, ksize=5)
+    #edgesB = cv2.GaussianBlur(edges, (3,3), 0) # Makes edge smoother
+    #edges = cv2.addWeighted(edges, 1, edgesB, 1, 0.9) # Makes a "glowing" edge
     edges = cv2.merge((edges,edges,edges))
+    edges = edges.astype('uint8') #MAYBE
    
 
     merge = cv2.addWeighted(frame, 1, edges, 1, 0.0)
+    #merge = cv2.resize(merge, (1280, 960), fx = 0, fy = 0) # Enlarges the video 
     cv2.imshow('Video',merge)
-
 
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
@@ -41,23 +42,3 @@ cv2.destroyAllWindows()
 quit()
 
 
-
-
-
-
-
-
-
-
-
-
-'''
-height, width, number of channels in image
-height = frame.shape[0]
-width = frame.shape[1]
-channels = frame.shape[2]
-
-print('Image Dimension    : ',dimensions)
-print('Image Height       : ',height)
-print('Image Width        : ',width)
-print('Number of Channels : ',channels)'''
